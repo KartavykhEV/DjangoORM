@@ -1,10 +1,26 @@
 from django.db import models
 
+
+class Author(models.Model):
+    id = models.IntegerField(primary_key=True, auto_created=True)
+    name = models.CharField(max_length=100)
+    email = models.EmailField()
+    birth_date = models.DateField()
+
+class Category(models.Model):
+    name = models.CharField(max_length=100)
+
 class Post(models.Model):
     title = models.CharField(max_length=200)
     content = models.TextField()
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    published_date = models.DateTimeField(auto_now_add=True)
+    is_published = models.BooleanField(default=False)
+    author = models.ForeignKey(Author, on_delete=models.CASCADE)
+    categories = models.ManyToManyField(Category)
 
-    def __str__(self):
-        return self.title
+class Comment(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')
+    author_name = models.CharField(max_length=100)
+    text = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    rating = models.IntegerField(default=0)
