@@ -1,7 +1,7 @@
 from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from .models import Post, Author, Category
+from .models import Author
 from .serializers import AuthorSerializer
 
 class AuthorViewSet(viewsets.ModelViewSet):
@@ -18,9 +18,13 @@ class AuthorViewSet(viewsets.ModelViewSet):
     
     # список 
     def get_queryset(self):
-        print('authors GET!!!')
-        queryset = Author.objects.all()
-        # published_only = self.request.query_params.get('published', None)
-        # if published_only:
-        #     queryset = queryset.filter(is_published=True)
+        
+        alive_only = self.request.query_params.get('alive', None)
+        if alive_only:
+            print('authors GET alive only')
+            queryset = Author.objects.filter(alive = True)
+        else:
+            print('authors GET all')
+            queryset = Author.objects.filter()
+
         return queryset

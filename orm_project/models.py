@@ -1,6 +1,6 @@
 from django.db import models
 
-
+# Авторы книг
 class Author(models.Model):
     id = models.AutoField(primary_key=True, auto_created=True)
     name = models.CharField(max_length=100)
@@ -8,24 +8,23 @@ class Author(models.Model):
     birth_date = models.DateField()
     alive = models.BooleanField()
 
-
+# категия книг
 class Category(models.Model):
-    name = models.CharField(max_length=100)
-
-
-class Post(models.Model):
     id = models.AutoField(primary_key=True)
-    title = models.CharField(max_length=200)
-    content = models.TextField()
-    published_date = models.DateTimeField(auto_now_add=True)
-    is_published = models.BooleanField(default=False)
-    author = models.ForeignKey(Author, on_delete=models.CASCADE, default=None)
-    categories = models.ManyToManyField(Category)
+    name = models.TextField(max_length=100)
 
+# книга
+class Book(models.Model):
+    id = models.AutoField(primary_key=True)
+    name = models.TextField(max_length=200)
+    author = models.ForeignKey(Author, on_delete=models.CASCADE)
+    release_date = models.DateField()
 
-class Comment(models.Model):
-    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="comments")
-    author_name = models.CharField(max_length=100)
-    text = models.TextField()
-    created_at = models.DateTimeField(auto_now_add=True)
-    rating = models.IntegerField(default=0)
+# связь книга - категория
+class BookCategory(models.Model):
+    pk = models.CompositePrimaryKey("book", "category")
+    book = models.ForeignKey(Book, on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    class Meta:
+        unique_together = ['book', 'category']  # Уникальная комбинация потому, что Django ORM НЕ умеет делать композитные ключи
+
