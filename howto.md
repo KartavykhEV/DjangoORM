@@ -9,4 +9,7 @@
 9. создать модель в файле models.py
 10. убедиться, что приложение прописано в списке INSTALLED\_APPS
 11. python manage.py makemigrations orm\_project		# создать миграцию для указанного приложения
-12. 
+
+Добавляем API
+1. pip install djangorestframework
+
