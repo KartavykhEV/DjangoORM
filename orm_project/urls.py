@@ -21,7 +21,7 @@ from orm_project.api_views import *
 
 
 router = DefaultRouter()
-# router.register(r'posts', PostViewSet)
+router.register(r'books', BookViewSet)
 router.register(r'authors', AuthorViewSet)
 # router.register(r'categories', CategoryViewSet)
 

@@ -11,5 +11,5 @@
 11. python manage.py makemigrations orm\_project		# создать миграцию для указанного приложения
 
 Добавляем API
-1. pip install djangorestframework
 
+1. pip install djangorestframework
