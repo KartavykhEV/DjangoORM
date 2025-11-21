@@ -97,10 +97,13 @@ DATABASES = {
         'CONN_MAX_AGE': 600,  # Поддержание подключения 10 минут
         'OPTIONS': {
             'connect_timeout': 5,
+            # Отключаем deferred constraints
+            'options': '-c constraint_exclusion=partition'
         }
     }
 }
 
+DJANGO_DEFERRED_CONSTRAINTS = False
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
